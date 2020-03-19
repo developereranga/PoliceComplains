@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Client";
+}
+
+
+
+<a class="btn btn-success" href="@Url.Action("ClientNewComplain")" role="button">Create new complain</a>
+<table class="table" style="margin-top: 15px">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var c in ViewBag.complains)
+            {
+                <tr>
+                    <td>@c.Title</td>
+                    <td>@c.Status</td>
+                    <td><a class="btn btn-info" href="@Url.Action("ViewComplain",new { id=c.Id})" role="button">View</a></td>
+                </tr>
+            }
+        }
+
+
+
+
+    </tbody>
+</table>

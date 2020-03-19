@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewData["Title"] = "CreateAdminAccount";
+}
+
+
+<div class="row">
+    <div class="col-sm"></div>
+    <div class="col-sm">
+        @{
+            if (ViewBag.error != null)
+            {
+                <p>@ViewBag.error</p>
+            }
+        }
+        <form action="@Url.Action("CreateAdminAccount","Dashboard")" method="post">
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" class="form-control" name="FirstName" required>
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" class="form-control" name="LastName">
+            </div>
+            <div class="form-group">
+                <label>NIC number</label>
+                <input type="text" class="form-control" name="NicNumber" id="nic" required>
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                <textarea class="form-control" name="Address" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" name="Email" required>
+            </div>
+            <div class="form-group">
+                <label>Telephone</label>
+                <input type="tel" class="form-control" name="TelephoneNumber" id="tel" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="Password" required id="p1">
+            </div>
+            <div class="form-group">
+                <label>Confirm password</label>
+                <input type="password" class="form-control" name="confirm_password" required id="p2">
+            </div>
+            <input type="hidden" name="Ip" id="ip" />
+            <input type="hidden" name="Country" id="country" />
+            <input type="hidden" name="City" id="city" />
+            <input type="hidden" name="Region" id="region" />
+            <input type="submit" class="btn btn-primary" id="btn_submit" value="Sign-up">
+        </form>
+
+    </div>
+    <div class="col-sm"></div>
+</div>
+
+
+<script>
+    $(function () {
+        $.get('https://ipapi.co/json/', function (geo) {
+            $('#ip').val(geo.ip);
+            $('#city').val(geo.city);
+            $('#region').val(geo.region);
+            $('#country').val(geo.country);
+        });
+        $('#btn_submit').click(function (event) {
+            var p1 = $('#p1').val();
+            var p2 = $('#p2').val();
+            var nic = $('#nic').val();
+            var tel = $('#tel').val();
+            if (p1!==p2) {
+                event.preventDefault();
+                alert('Password does not matched');
+                return;
+            }
+            if (!(nic.length === 10 || nic.length === 12)) {
+                event.preventDefault();
+                alert('Invalid nic number');
+                return;
+            }
+            if (tel.length != 10) {
+                event.preventDefault();
+                alert('Invalid telephone number');
+                return;
+            }
+        });
+    });
+</script>

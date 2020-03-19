@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+    <div class="row">
+        <div class="col-sm">@ViewBag.error</div>
+        <div class="col-sm">
+            <form accesskey="@Url.Action("Login")" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="text" class="form-control" name="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" name="Password" placeholder="Password">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <a href="@Url.Action("RecoverPassword","User")">Recover my password</a>
+        </div>
+        <div class="col-sm"></div>
+    </div>

@@ -1,0 +1,112 @@
+﻿@using PoliceComplains.Entities
+
+@{
+    ViewData["Title"] = "Account";
+    User user = ViewBag.user;
+}
+<a class="btn btn-success" href="@Url.Action("CreateAdminAccount","Dashboard")" role="button" style="margin: 5px">Create new admin account</a>
+<div class="row">
+
+    <div class="col-sm">
+        <div class="card">
+
+            <div class="card-body">
+                <h3>Personal Information</h3>
+                <div>
+                    <form action="@Url.Action("UpdateInfo")" method="post">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" name="FirstName" value="@user.FirstName"  >
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" name="LastName" value="@user.LastName"  >
+                        </div>
+                        <div class="form-group">
+                            <label>NIC number</label>
+                            <input type="text" class="form-control" name="NicNumber" value="@user.NicNumber" id="nic"  >
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" name="Address"  >@user.Address</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="Email" value="@user.Email"  >
+                        </div>
+                        <div class="form-group">
+                            <label>Telephone</label>
+                            <input type="tel" class="form-control" name="TelephoneNumber" value="@user.TelephoneNumber" id="tel"  >
+                        </div>
+                        <input type="submit" class="btn btn-primary" id="btn_update" value="Update information">
+                    </form><hr/>
+                    <div class="form-group">
+                        <label>Ip</label>
+                        <input type="text" name="Ip" class="form-control" id="ip" value="@user.Ip" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" name="Country" class="form-control" id="country" value="@user.Country" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" name="City" class="form-control" id="city" value="@user.City" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <label>Region</label>
+                        <input type="text" name="Region" class="form-control" id="region" value="@user.Region" readonly/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card">
+
+            <div class="card-body">
+                <h3>Reset Password</h3>
+                <form action="@Url.Action("ResetPassword", "User")" method="post">
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="Password" required id="p1">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm password</label>
+                        <input type="password" class="form-control" name="confirm_password" required id="p2">
+                    </div>
+                    <input type="submit" class="btn btn-primary" id="btn_submit" value="Reset Password">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#btn_submit').click(function (event) {
+            var p1 = $('#p1').val();
+            var p2 = $('#p2').val();
+            if (p1 !== p2) {
+                event.preventDefault();
+                alert('Password does not matched');
+                return;
+            }
+        });
+        $('#btn_update').click(function (event) {
+         
+            var nic = $('#nic').val();
+            var tel = $('#tel').val();
+           
+            if (!(nic.length === 10 || nic.length === 12)) {
+                event.preventDefault(); 
+                alert('Invalid nic number');
+                return;
+            }
+            if (tel.length != 10) {
+                event.preventDefault(); 
+                alert('Invalid telephone number');
+                return;
+            }
+        });
+    });
+</script>

@@ -1,0 +1,93 @@
+﻿@using System.Security.Claims
+@using PoliceComplains.Entities
+
+@{
+    ViewData["Title"] = "ViewComplain";
+    Complains c = ViewBag.complain;
+}
+
+
+<a class="btn btn-primary" href="@Url.Action(User.Claims.First(x => x.Type.Equals(ClaimTypes.Role)).Value)" role="button">< Back to claims</a>
+@{
+    var role = User.Claims.First(x => x.Type.Equals(ClaimTypes.Role)).Value;
+    if (role.Equals("admin") && c.Status != "Case closed")
+    {
+        <a class="btn btn-danger" href="@Url.Action("CaseClose",new { caseId=c.Id})" role="button">Case close</a>
+    }
+}
+<a class="btn btn-info" href="@Url.Action("PrintComplain",new { cid=c.Id})" role="button">Print</a>
+<h1>@c.Title</h1>
+<div class="card">
+    <div class="card-body">
+        <p>@c.Description</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm ">
+        <h4>Messages</h4>
+        <div class="card">
+            <div class="card-body">
+                <div style="overflow-y: scroll; height:170px;">
+                    @{
+                        if (c.ComplainFeedback != null)
+                        {
+                            foreach (var fb in c.ComplainFeedback)
+                            {
+                                if (fb.UserId.Equals(ViewBag.userId))
+                                {
+                                    <div class="float-right text-break msg">@fb.Message.Trim()</div><br />
+                                }
+                                else
+                                {
+                                    <div class="float-left text-break msg">@fb.Message.Trim()</div><br />
+                                }
+                            }
+
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        @{
+            if (!c.Status.Equals("Case closed"))
+            { <form class="form-inline" action="@Url.Action("SendMessage")" method="post" style="margin-top: 10px">
+                    <div class="form-group mx-sm-3 mb-2">
+
+                        <input type="text" class="form-control" name="Message" placeholder="Enter your message here">
+
+                    </div>
+                    <input type="hidden" value="@c.UserId" name="UserId" />
+                    <input type="hidden" value="@c.Id" name="ComplainId" />
+                    <button type="submit" class="btn btn-primary mb-2">Send</button>
+                </form>}
+        }
+
+    </div>
+    <div class="col-sm">
+        <h4>Attachments</h4>
+        <div class="card">
+            <div class="card-body">
+                <div style="overflow-y: scroll; height:170px;">
+                    <ul>
+                        @{
+                            if (c.ComplainDocs != null)
+                            {
+                                foreach (var doc in c.ComplainDocs)
+                                {
+                                    var location = "/" + c.UserId + "/" + doc.FileName;
+                                    <li>
+                                        <a target="_blank" href="@location">@doc.RealName</a>
+                                    </li>
+                                }
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            </div>
+
+

@@ -1,0 +1,34 @@
+﻿@using PoliceComplains.Entities
+
+@{
+    Layout = null;
+    Complains c = ViewBag.comp;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <h1>The Complain Summery</h1>
+   
+</head>
+<body>
+<h2>@c.Title</h2>
+<p>@c.Description</p>
+<hr />
+<h3>Conversion and feedback</h3>
+<ul>
+    @{
+        if (c.ComplainFeedback != null)
+        {
+            foreach (var f in c.ComplainFeedback)
+            {
+                 <li>@f.User.FirstName @f.User.LastName : @f.Message </li>
+            }
+        }
+    }
+</ul>
+    <input type="button" onclick="window.print();" value="Print"/>
+</body>
+</html>
