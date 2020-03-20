@@ -411,3 +411,5 @@ C:\Users\Eranga\Documents\Projects\PoliceComlain\PoliceComplains\PoliceComplains
 C:\Users\Eranga\Documents\Projects\PoliceComlain\PoliceComplains\PoliceComplains\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\CreateAdminAccount.cshtml.g.cs
 C:\Users\Eranga\Documents\Projects\PoliceComlain\PoliceComplains\PoliceComplains\obj\Debug\netcoreapp3.1\Razor\Views\User\RecoverPassword.cshtml.g.cs
 C:\Users\Eranga\Documents\Projects\PoliceComlain\PoliceComplains\PoliceComplains\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\PrintComplain.cshtml.g.cs
+C:\Users\Eranga\Documents\Projects\PoliceComlain\PoliceComplains\PoliceComplains\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\EditDoc.cshtml.g.cs
+C:\Users\Eranga\Documents\Projects\PoliceComlain\PoliceComplains\PoliceComplains\obj\Debug\netcoreapp3.1\Razor\Views\Home\Docs.cshtml.g.cs

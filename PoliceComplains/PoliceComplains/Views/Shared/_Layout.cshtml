@@ -38,27 +38,29 @@
 
         <nav class="navbar navbar-light bg-white justify-content-between border-bottom box-shadow" style="margin-bottom: 10px">
             <a class="navbar-brand">PoliceComplains</a>
-          
+            <div>
 
-            @{
-                if (logedIn)
-                {
-                    var role = User.Claims.First(x => x.Type.Equals(ClaimTypes.Role)).Value;
-                        <div>
-                            <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="@Url.Action(role,"Dashboard")">Dashboard</a>
-                            <a class="btn btn-outline-primary my-2 my-sm-0" role="button" href="@Url.Action("Account","User")">My Account</a>
-                            <a class="btn btn-outline-danger my-2 my-sm-0" role="button" href="@Url.Action("Logout","User")">Logout</a>
-                        </div>
+                @{
+                    if (logedIn)
+                    {
+                        var role = User.Claims.First(x => x.Type.Equals(ClaimTypes.Role)).Value;
+
+                        <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="@Url.Action(role,"Dashboard")">Dashboard</a>
+                        <a class="btn btn-outline-primary my-2 my-sm-0" role="button" href="@Url.Action("Account","User")">My Account</a>
+                        <a class="btn btn-outline-danger my-2 my-sm-0" role="button" href="@Url.Action("Logout","User")">Logout</a>
+
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="@Url.Action("Login","User")">Login</a>
+                        <a class="btn btn-outline-primary my-2 my-sm-0" role="button" href="@Url.Action("SignUp","User")">Sign-Up</a>
+                    }
+                    <a class="btn btn-outline-info my-2 my-sm-0" role="button" href="@Url.Action("Docs","Home")">Docs</a>
                 }
-                else
-                {
-                    <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="@Url.Action("Login","User")">Login</a>
-                }
-            }
 
+            </div>
 
-
-        </nav>
+            </nav>
 
     </header>
     <div class="container">

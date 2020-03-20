@@ -1,0 +1,39 @@
+﻿
+
+
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<div id="editor">
+   @ViewBag.doc.Content
+</div>
+<button onclick="update()" class="btn btn-primary" style="margin-top:10px">Update</button>
+<!-- Include the Quill library -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<!-- Initialize Quill editor -->
+<script>
+    var quill = new Quill('#editor',
+        {
+            theme: 'snow'
+        });
+
+    function update() {
+        var html =quill.container.firstChild.innerHTML;
+        var formData = new FormData();
+        formData.append("Content", html);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: '@Url.Action("EditDoc")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function(data) {
+                if (data.status) {
+                    alert("Updated");
+                }
+            }
+        });
+    }
+</script>

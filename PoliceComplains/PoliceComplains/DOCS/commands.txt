@@ -1,2 +1,2 @@
 ﻿
-﻿dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=&;database=police_complain" "Pomelo.EntityFrameworkCore.MySql" -c PoliceComplainsContext -o Entities --project PoliceComplains -f
+﻿dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=;database=police_complain" "Pomelo.EntityFrameworkCore.MySql" -c PoliceComplainsContext -o Entities --project PoliceComplains -f

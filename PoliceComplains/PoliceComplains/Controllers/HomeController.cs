@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PoliceComplains.Entities;
 using PoliceComplains.Models;
 
 namespace PoliceComplains.Controllers
@@ -12,9 +13,11 @@ namespace PoliceComplains.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly PoliceComplainsContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, PoliceComplainsContext context)
         {
+            _context = context;
             _logger = logger;
         }
 
@@ -32,6 +35,12 @@ namespace PoliceComplains.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Docs()
+        {
+            ViewBag.doc = _context.Docs.FirstOrDefault();
+            return View();
         }
     }
 }

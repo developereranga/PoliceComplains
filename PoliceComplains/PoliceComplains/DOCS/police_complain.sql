@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 19, 2020 at 05:53 PM
--- Server version: 5.7.29-0ubuntu0.16.04.1
--- PHP Version: 7.0.33-0ubuntu0.16.04.12
+-- Host: 127.0.0.1:3306
+-- Generation Time: Mar 20, 2020 at 05:43 AM
+-- Server version: 5.7.26
+-- PHP Version: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,13 +28,16 @@ SET time_zone = "+00:00";
 -- Table structure for table `complains`
 --
 
-CREATE TABLE `complains` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `complains`;
+CREATE TABLE IF NOT EXISTS `complains` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `user_id` int(11) NOT NULL,
-  `status` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complains`
@@ -49,12 +52,15 @@ INSERT INTO `complains` (`id`, `title`, `description`, `user_id`, `status`) VALU
 -- Table structure for table `complain_docs`
 --
 
-CREATE TABLE `complain_docs` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `complain_docs`;
+CREATE TABLE IF NOT EXISTS `complain_docs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `complain_id` int(11) NOT NULL,
   `file_name` varchar(255) NOT NULL,
-  `real_name` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `real_name` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `complain_id` (`complain_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complain_docs`
@@ -69,12 +75,16 @@ INSERT INTO `complain_docs` (`id`, `complain_id`, `file_name`, `real_name`) VALU
 -- Table structure for table `complain_feedback`
 --
 
-CREATE TABLE `complain_feedback` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `complain_feedback`;
+CREATE TABLE IF NOT EXISTS `complain_feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `complain_id` int(11) NOT NULL,
   `message` text NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `complain_id` (`complain_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complain_feedback`
@@ -94,11 +104,32 @@ INSERT INTO `complain_feedback` (`id`, `complain_id`, `message`, `user_id`) VALU
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `docs`
+--
+
+DROP TABLE IF EXISTS `docs`;
+CREATE TABLE IF NOT EXISTS `docs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` longtext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `docs`
+--
+
+INSERT INTO `docs` (`id`, `content`) VALUES
+(1, '<p>test documentation </p>');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `nic_number` varchar(255) NOT NULL,
@@ -110,8 +141,9 @@ CREATE TABLE `user` (
   `city` varchar(255) NOT NULL,
   `region` varchar(255) NOT NULL,
   `country` varchar(255) NOT NULL,
-  `role` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `role` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -121,66 +153,6 @@ INSERT INTO `user` (`id`, `first_name`, `last_name`, `nic_number`, `address`, `p
 (1, 'test first', 'test last', '945785421v', 'test', '84A3C0A525EEFF7C2B0C488C49951A1E', 'developer.eranga@gmail.com', '0754584200', '112.134.160.167', 'Kandy', 'Central Province', 'LK', 'client'),
 (2, '888', 'admin last', '945785421v', 'admin ', 'CAF1A3DFB505FFED0D024130F58C5CFA', 'admin@admin.com', '0754584200', '112.134.160.167', 'Kandy', 'Central Province', 'LK', 'admin'),
 (3, 'rr', 'rr', '932541853v', 'sdfdsf', '202CB962AC59075B964B07152D234B70', 'jaja@jaja.com', '0754854100', '112.134.160.68', 'Kandy', 'Central Province', 'LK', 'admin');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `complains`
---
-ALTER TABLE `complains`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `complain_docs`
---
-ALTER TABLE `complain_docs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `complain_id` (`complain_id`);
-
---
--- Indexes for table `complain_feedback`
---
-ALTER TABLE `complain_feedback`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `complain_id` (`complain_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `complains`
---
-ALTER TABLE `complains`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `complain_docs`
---
-ALTER TABLE `complain_docs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `complain_feedback`
---
-ALTER TABLE `complain_feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

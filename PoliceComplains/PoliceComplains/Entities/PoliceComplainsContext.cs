@@ -18,11 +18,16 @@ namespace PoliceComplains.Entities
         public virtual DbSet<ComplainDocs> ComplainDocs { get; set; }
         public virtual DbSet<ComplainFeedback> ComplainFeedback { get; set; }
         public virtual DbSet<Complains> Complains { get; set; }
+        public virtual DbSet<Docs> Docs { get; set; }
         public virtual DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;database=police_complain", x => x.ServerVersion("5.7.26-mysql"));
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -146,6 +151,22 @@ namespace PoliceComplains.Entities
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("complains_ibfk_1");
+            });
+
+            modelBuilder.Entity<Docs>(entity =>
+            {
+                entity.ToTable("docs");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Content)
+                    .IsRequired()
+                    .HasColumnName("content")
+                    .HasColumnType("longtext")
+                    .HasCharSet("latin1")
+                    .HasCollation("latin1_swedish_ci");
             });
 
             modelBuilder.Entity<User>(entity =>

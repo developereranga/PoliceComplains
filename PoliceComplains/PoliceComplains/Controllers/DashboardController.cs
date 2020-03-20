@@ -48,6 +48,21 @@ namespace PoliceComplains.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "admin")]
+        public IActionResult EditDoc()
+        {
+            ViewBag.doc = _context.Docs.First();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult EditDoc(Docs post)
+        {
+            var doc = _context.Docs.First();
+            doc.Content = post.Content;
+            _context.Docs.Update(doc);
+            _context.SaveChanges();
+            return Json(new { status=true});
+        }
 
         [Authorize]
         public IActionResult ViewComplain(int id)
